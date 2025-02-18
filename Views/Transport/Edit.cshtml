@@ -1,0 +1,55 @@
+﻿@model SSVH_Consultation_Poratl.Models.Transport
+
+@{
+    ViewData["Title"] = "Edit Transport";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-table">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center mb-5">Edit Transport</h1>
+                </div>
+            </div>
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AreaName" class="form-control custom-labels" autocomplete="off" placeholder="" />
+                            <label asp-for="AreaName" class="control-label"></label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="Amount" class="form-control custom-labels" autocomplete="off" placeholder="" />
+                            <label asp-for="Amount" class="control-label"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+                            <input type="submit" value="Save" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

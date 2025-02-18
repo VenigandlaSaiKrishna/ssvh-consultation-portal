@@ -1,0 +1,107 @@
+﻿@model SSVH_Consultation_Poratl.Models.Class
+
+@{
+    ViewData["Title"] = "Edit Class";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-table">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center mb-5">Edit Class</h1>
+                </div>
+            </div>
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AcadamicYear" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="AcadamicYear" class="control-label">Academic Year</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <select id="ClassId" name="ClassId" onchange="classIdChange(this)" asp-items="ViewBag.ClassNamesListData" class="form-control form-select">
+                                <option value="" selected>Please Select</option>
+                            </select>
+                            <label id="ClassIdlbl" name="ClassIdlbl" class="control-label">Select Class Name</label>
+                        </div>
+                        <input type="hidden" asp-for="Name" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AcadamicFees" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="AcadamicFees" class="control-label">Acadamic Fees</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="BooksAmount" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="BooksAmount" class="control-label">Books Amount</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+                            <input type="submit" value="Save" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var ClassNamesData = @Html.Raw(Json.Serialize(ViewBag.ClassNamesData));
+
+        function classIdChange(e) {
+            var selectedId = e.selectedIndex;
+            var selectedClass = ClassNamesData.find(t => t.id == selectedId);
+            if (selectedClass) {
+                $('#Name').val(selectedClass.className);
+            } else {
+                $('#Name').val('');
+            }
+        }
+
+        function classIdsChange(e) {
+            var selectedId = e.value;
+            var selectedClass = ClassNamesData.find(t => t.className == selectedId);
+
+            if (selectedClass) {
+                $("#ClassId option").filter(function () {
+                    return $(this).text().trim() === selectedClass.className
+                }).prop("selected", true);
+                $("#ClassId").addClass("has-value");
+            }
+            else {
+                $("#ClassId").removeClass("has-value");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectedClassId = document.getElementById("Name").value;
+            if (selectedClassId) {
+                classIdsChange(document.getElementById("Name"));
+            }
+        });
+    </script>
+}

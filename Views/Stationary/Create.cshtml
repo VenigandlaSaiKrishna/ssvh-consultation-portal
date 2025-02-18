@@ -1,0 +1,125 @@
+﻿@model SSVH_Consultation_Poratl.Models.Stationary
+
+@{
+    ViewData["Title"] = "Create Uniform";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-table">
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center mb-5">Create Uniform</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div style="display:flex;">
+                                <label class="form-label me-2">Select Gender</label>
+                                <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" asp-for="Gender" onclick="toggleFields()" checked id="male" value="Male" />
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" asp-for="Gender" onclick="toggleFields()" id="female" value="Female" />
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <select id="ClassId" name="ClassId" onchange="classIdChange(this)" asp-items="ViewBag.ClassNamesListData" class="form-control form-select">
+                                <option value="" selected>Please Select</option>
+                            </select>
+                            <label id="ClassIdlbl" name="ClassIdlbl" class="control-label">Select Class Name</label>
+                        </div>
+                        <input type="hidden" value="" asp-for="ClassName" />
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group custom-labels">
+                                    <input asp-for="ShirtSize" class="form-control" autocomplete="off" placeholder="" />
+                                    <label asp-for="ShirtSize" class="control-label">Shirt Size</label>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group custom-labels boyFields">
+                                    <input asp-for="PantSize" class="form-control" autocomplete="off" placeholder="" />
+                                    <label asp-for="PantSize" class="control-label">Pant Size</label>
+                                </div>
+                                <div class="form-group custom-labels girlFields" style="display: none;">
+                                    <input asp-for="SkirtSize" class="form-control" autocomplete="off" placeholder="" />
+                                    <label asp-for="SkirtSize" class="control-label">Skirt Size</label>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group custom-labels">
+                                    <input asp-for="Amount" class="form-control" autocomplete="off" placeholder="" />
+                                    <label asp-for="Amount" class="control-label">Amount</label>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group custom-labels">
+                                    <input asp-for="BeltTieSocksAmount" class="form-control" autocomplete="off" placeholder="" />
+                                    <label asp-for="BeltTieSocksAmount" class="control-label">Belt/Tie/Socks Amount</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+                            <input type="submit" value="Create" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var ClassNamesData = @Html.Raw(Json.Serialize(ViewBag.ClassNamesData));
+        function classIdChange(e) {
+            var selectedId = e.selectedIndex;
+            var selectedClass = ClassNamesData.find(t => t.id == selectedId);
+            if (selectedClass) {
+                $('#ClassName').val(selectedClass.className);
+            } else {
+                $('#ClassName').val('');
+            }
+        }
+
+        function toggleFields() {
+            var isBoy = document.getElementById("male").checked;
+            if (isBoy) {
+                $(".boyFields").css('display', 'block');
+                $(".girlFields").css('display', 'none');
+            }
+            else{
+                $(".boyFields").css('display', 'none');
+                $(".girlFields").css('display', 'block');
+            }
+        }
+    </script>
+}

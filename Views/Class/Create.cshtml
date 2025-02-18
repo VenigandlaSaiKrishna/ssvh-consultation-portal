@@ -1,0 +1,83 @@
+﻿@model SSVH_Consultation_Poratl.Models.Class
+
+@{
+    ViewData["Title"] = "Create Class";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-table">
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center mb-5">Create Class</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AcadamicYear" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="AcadamicYear" class="control-label">Academic Year</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <select id="ClassId" name="ClassId" onchange="classIdChange(this)" asp-items="ViewBag.ClassNamesListData" class="form-control form-select">
+                                <option value="" selected>Please Select</option>
+                            </select>
+                            <label id="ClassIdlbl" name="ClassIdlbl" class="control-label">Select Class Name</label>
+                        </div>
+                        <input type="hidden" value="" asp-for="Name" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AcadamicFees" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="AcadamicFees" class="control-label">Acadamic Fees</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="BooksAmount" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="BooksAmount" class="control-label">Books Amount</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+                            <input type="submit" value="Create" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var ClassNamesData = @Html.Raw(Json.Serialize(ViewBag.ClassNamesData));
+        function classIdChange(e) {
+            var selectedId = e.selectedIndex;
+            var selectedClass = ClassNamesData.find(t => t.id == selectedId);
+            if (selectedClass) {
+                $('#Name').val(selectedClass.className);
+            } else {
+                $('#Name').val('');
+            }
+        }
+    </script>
+}

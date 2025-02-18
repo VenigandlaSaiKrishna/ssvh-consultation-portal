@@ -1,0 +1,466 @@
+﻿@model SSVH_Consultation_Poratl.Models.CreateConsultationViewModel
+
+@{
+    ViewData["Title"] = "Create New Consultation";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-table">
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center mb-5">Create Consultation</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <div class="form-group custom-labels">
+                                <input asp-for="AcadamicYear" class="form-control" autocomplete="off" placeholder="" />
+                                <label asp-for="AcadamicYear" class="control-label">Academic Year</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="StudentName" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="StudentName" class="control-label">Student Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="ParentName" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="ParentName" class="control-label">Parent Name</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="Mobile" maxlength="10" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="Mobile" class="control-label">Mobile</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <select asp-for="ClassId" asp-items="ViewBag.ClaaNames" class="form-control form-select">
+                                <option value="" selected>Please Select</option>
+                            </select>
+                            <label asp-for="ClassId" class="control-label">Select Class Name</label>
+                            <input type="hidden" asp-for="ClassName" value="" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AdmissionFees" class="form-control" value="2500" autocomplete="off" placeholder="" />
+                            <label asp-for="AdmissionFees" class="control-label">Admission Fees</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AcadamicFees" readonly class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="AcadamicFees" class="control-label" disabled>Acadamic Fees</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <div class="IsAcadamicFeesDiscountchangeMargin" style="width:15%; margin-top:8px">
+                                <input type="checkbox" onchange="discountCheckboxToggle('IsAcadamicFeesDiscount')" class="toggle-switch-checkbox" asp-for="IsAcadamicFeesDiscount" />
+                                <label class="toggle-switch-label" for="IsAcadamicFeesDiscount">
+                                    <span class="toggle-switch-inner"></span>
+                                    <span class="toggle-switch-switch"></span>
+                                </label>
+                            </div>
+                            <div class="form-group custom-labels discountInput" id="IsAcadamicFeesDiscountInput" style="display:none; width: 100%">
+                                <input asp-for="AcadamicFeesDiscount" onblur="updateTermFees()" class="form-control" autocomplete="off" placeholder="" />
+                                <label asp-for="AcadamicFeesDiscount" class="control-label">Concession</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sliding Panel -->
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <div id="quarterFeesContainer" class="sliding-panel mb-5">
+                            <h3 class="text-center">Term Wise Fees Structure</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Term 1 Fees
+                                    <span class="badge bg-primary rounded-pill">₹ <span id="term1fee"></span></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Term 2 Fees
+                                    <span class="badge bg-primary rounded-pill">₹ <span id="term2fee"></span></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Term 3 Fees
+                                    <span class="badge bg-primary rounded-pill">₹ <span id="term3fee"></span></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Term 4 Fees
+                                    <span class="badge bg-primary rounded-pill">₹ <span id="term4fee"></span></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group custom-labels">
+                            <input asp-for="BooksAmount" readonly class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="BooksAmount" class="control-label" disabled>Books Amount</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group custom-labels has-value">
+                            <select asp-for="StationaryId" class="form-control form-select">
+                                <option value="" selected>Please Select</option>
+                            </select>
+                            <label asp-for="StationaryId" class="control-label">Uniform Size</label>
+                            <input type="hidden" asp-for="UniformData" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group custom-labels">
+                            <input asp-for="UniformAmount" readonly class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="UniformAmount" class="control-label" disabled>Uniform Amount</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group custom-labels">
+                            <input asp-for="BeltTieSocksAmount" readonly class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="BeltTieSocksAmount" class="control-label" disabled>Belt/Tie/Socks Amount</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <select asp-for="TransportId" asp-items="ViewBag.TransportData" class="form-control form-select">
+                                <option value="" selected>Please select</option>
+                            </select>
+                            <label asp-for="TransportId" class="control-label">Transport</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="TransportAmount" readonly class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="TransportAmount" class="control-label" disabled>Transport Amount</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+                            <input type="submit" value="Create" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </form>
+
+            @* <button onclick="printReceipt()" class="btn btn-primary">Print Receipt</button> *@
+            <!-- Receipt Section -->
+            <div id="receipt-section" style="display:none;">
+                <table style="">
+                    <tbody>
+                        <tr>
+                            <th>Academic Year</th>
+                            <td><span id="acadamicYear"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Student Name</th>
+                            <td><span id="studentName"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Parent Name</th>
+                            <td><span id="parentName"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Mobile</th>
+                            <td><span id="mobile"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Class Name</th>
+                            <td><span id="className"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Admission Fees</th>
+                            <td>₹<span id="admissionFees"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Academic Fees</th>
+                            <td>₹<span id="acadamicFees"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Discount (Academic Fees)</th>
+                            <td>₹<span id="acadamicFeesDiscount"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Books Amount</th>
+                            <td>₹<span id="booksAmount"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Discount (Books Amount)</th>
+                            <td>₹<span id="booksAmountDiscount"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Uniform Amount</th>
+                            <td>₹<span id="uniformAmount"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Transport Amount</th>
+                            <td>₹<span id="transportAmount"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Discount (Transport Amount)</th>
+                            <td>₹<span id="transportAmountDiscount"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function printReceipt() {
+            document.getElementById("receipt-section").style.display = "block";
+
+            // Fill receipt data from the form
+            document.getElementById("acadamicYear").textContent = document.querySelector("input[name='AcadamicYear']").value;
+            document.getElementById("studentName").textContent = document.querySelector("input[name='StudentName']").value;
+            document.getElementById("parentName").textContent = document.querySelector("input[name='ParentName']").value;
+            document.getElementById("mobile").textContent = document.querySelector("input[name='Mobile']").value;
+            document.getElementById("className").textContent = document.querySelector("input[name='ClassName']").value;
+            document.getElementById("admissionFees").textContent = document.querySelector("input[name='AdmissionFees']").value;
+            document.getElementById("acadamicFees").textContent = document.querySelector("input[name='AcadamicFees']").value;
+            document.getElementById("acadamicFeesDiscount").textContent = document.querySelector("input[name='AcadamicFeesDiscount']").value;
+            document.getElementById("booksAmount").textContent = document.querySelector("input[name='BooksAmount']").value;
+            //document.getElementById("booksAmountDiscount").textContent = document.querySelector("input[name='BooksAmountDiscount']").value;
+            // document.getElementById("uniformAmount").textContent = document.querySelector("input[name='UniformAmount']").value;
+            // document.getElementById("uniformAmountDiscount").textContent = document.querySelector("input[name='UniformAmountDiscount']").value;
+            document.getElementById("transportAmount").textContent = document.querySelector("input[name='TransportAmount']").value;
+            //document.getElementById("transportAmountDiscount").textContent = document.querySelector("input[name='TransportAmountDiscount']").value;
+
+            printJS({
+                printable: 'receipt-section',
+                type: 'html',
+                header: 'Consultation Receipt',
+                style: `
+                                                                                @@page {
+                                                                                    size: A8;
+                                                                                    margin: 0;
+                                                                                }
+                                                                                body {
+                                                                                    font-family: Arial, sans-serif;
+                                                                                    font-size: 8px;
+                                                                                    margin: 0;
+                                                                                    padding: 0;
+                                                                                    display: flex;
+                                                                                    justify-content: center;
+                                                                                    align-items: center;
+                                                                                    height: 100vh;
+                                                                                }
+                                                                                h1 {
+                                                                                    text-align: center;
+                                                                                    margin-bottom: 10px;
+                                                                                    font-size: 16px;
+                                                                                }
+                                                                                table {
+                                                                                    width: 90%;
+                                                                                    border: 1px solid black;
+                                                                                    border-collapse: collapse;
+                                                                                    margin: 0 auto;
+                                                                                }
+                                                                                th, td {
+                                                                                    padding: 4px;
+                                                                                    text-align: left;
+                                                                                    border: 1px solid black;
+                                                                                    font-size: 8px;
+                                                                                }
+                                                                                @@media print {
+                                                                                    body {
+                                                                                        display: block;
+                                                                                        padding: 0;
+                                                                                        height: auto;
+                                                                                    }
+                                                                                    #receipt-section {
+                                                                                        display: block !important;
+                                                                                        margin: 0;
+                                                                                        text-align: center;
+                                                                                    }
+                                                                                    table {
+                                                                                        width: 80%;
+                                                                                        margin: 0 auto;
+                                                                                        border: 1px solid black;
+                                                                                        border-collapse: collapse;
+                                                                                    }
+                                                                                    th, td {
+                                                                                        padding: 5px;
+                                                                                        font-size: 8px;
+                                                                                    }
+                                                                                }
+                                                                          `
+            });
+
+            document.getElementById("receipt-section").style.display = "none";
+        }
+
+        $(document).ready(function () {
+            var transportData = @Html.Raw(Json.Serialize(ViewBag.TransportList));
+            var classData = @Html.Raw(Json.Serialize(ViewBag.ClassList));
+            var uniformData = @Html.Raw(Json.Serialize(ViewBag.UniformList));
+
+            $("#Mobile").on("input", function () {
+                $(this).val($(this).val().replace(/\D/g, ''));
+                var regex = /^\d{10}$/;
+                if (!regex.test($(this).val()))
+                    event.preventDefault();
+            });
+
+            $('#TransportId').change(function () {
+                var selectedId = $(this).val();
+                var selectedTransport = transportData.find(t => t.id == selectedId);
+                if (selectedTransport) {
+                    $('#TransportAmount').val(selectedTransport.amount);
+                } else {
+                    $('#TransportAmount').val('');
+                }
+            });
+
+            $('#AcadamicYear').blur(function () {
+                $('#ClassId').trigger("change");
+            });
+
+            $('#ClassId').change(function () {
+                var selectedId = $("#ClassId option:selected").text();
+                var acadamicYear = $('#AcadamicYear').val();
+                var selectedAY = classData.find(t => t.name == selectedId && t.acadamicYear == acadamicYear.trim());
+                var selectedUD = uniformData.filter(function (item) {
+                    return item.className.includes(selectedId);
+                });
+                if (selectedAY) {
+                    $('#BooksAmount').val(selectedAY.booksAmount);
+                    $('#AcadamicFees').val(selectedAY.acadamicFees);
+                    $('#UniformAmount').val();
+                    $('#StationaryId').val();
+                    $("#ClassName").val(selectedAY.name);
+                    $('#StationaryId').addClass('has-value');
+                    calcQuarterFees();
+                } else {
+                    $('#BooksAmount').val('');
+                    $('#AcadamicFees').val('');
+                    $('#UniformAmount').val('');
+                    $('#StationaryId').val('');
+                    $("#ClassName").val('');
+                    $("#BeltTieSocksAmount").val('');
+                    $('#StationaryId').removeClass('has-value');
+                    calcQuarterFees();
+                }
+                if (selectedUD) {
+                    let dropdown = $("#StationaryId");
+                    dropdown.empty().append('<option value="">Select an option</option>');
+                    $.each(selectedUD, function (index, item) {
+                        dropdown.append(new Option(item.uniformInfo, item.id));
+                    });
+                }
+                else {
+                    let dropdown = $("#StationaryId");
+                    dropdown.empty().append('<option value="">Select an option</option>');
+                }
+            });
+
+            $('#StationaryId').change(function () {
+                var selectedId = $(this).val();
+                var selectedAY = uniformData.find(t => t.id == selectedId);
+                if (selectedAY) {
+                    $('#UniformAmount').val(selectedAY.amount);
+                    $("#BeltTieSocksAmount").val(selectedAY.beltTieSocksAmount);
+                    $('#UniformData').val(selectedAY.uniformInfo);
+                } else {
+                    $('#UniformAmount').val('');
+                    $("#BeltTieSocksAmount").val('');
+                    $('#UniformData').val('');
+                }
+            });
+        });
+
+        function discountCheckboxToggle(id) {
+            if ($("#" + id).is(':checked')) {
+                $("." + id + "changeMargin").css("margin-top", "-18px");
+                $('#' + id + 'Input').show();
+            } else {
+                $("." + id + "changeMargin").css("margin-top", "8px");
+                $('#' + id + 'Input').hide();
+                if (id === "IsAcadamicFeesDiscount") {
+                    $('#AcadamicFeesDiscount').val('');
+                    updateTermFees();
+                }
+            }
+
+        }
+
+        function calcQuarterFees() {
+            const $panel = $("#quarterFeesContainer");
+            const academicFees = parseFloat($("#AcadamicFees").val());
+            if (!isNaN(academicFees) && academicFees > 0) {
+                const termFee = (academicFees / 4).toFixed(0);
+                $('#term1fee').text(termFee);
+                $('#term2fee').text(termFee);
+                $('#term3fee').text(termFee);
+                $('#term4fee').text(termFee);
+                $panel.addClass("active");
+                $panel.show();
+            } else {
+                $('#term1fee').text('');
+                $('#term2fee').text('');
+                $('#term3fee').text('');
+                $('#term4fee').text('');
+                $panel.hide();
+                $panel.removeClass("active");
+            }
+        }
+
+        function updateTermFees() {
+            const academicFees = parseFloat($("#AcadamicFees").val());
+            const academicFeesDiscount = parseFloat($("#AcadamicFeesDiscount").val());
+            if (!isNaN(academicFees) && academicFees > 0
+                && !isNaN(academicFeesDiscount) && academicFeesDiscount > 0) {
+                const termFee = ((academicFees - academicFeesDiscount) / 4).toFixed(0);
+                $('#term1fee').text(termFee);
+                $('#term2fee').text(termFee);
+                $('#term3fee').text(termFee);
+                $('#term4fee').text(termFee);
+            } else {
+                $('#term1fee').text('');
+                $('#term2fee').text('');
+                $('#term3fee').text('');
+                $('#term4fee').text('');
+                calcQuarterFees();
+            }
+        }
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@model SSVH_Consultation_Poratl.Models.Transport
+
+@{
+    ViewData["Title"] = "Create Transport";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-table">
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center mb-5">Create Transport</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="AreaName" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="AreaName" class="control-label"></label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="Amount" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="Amount" class="control-label"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+                            <input type="submit" value="Create" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

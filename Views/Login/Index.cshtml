@@ -1,0 +1,38 @@
+﻿@model SSVH_Consultation_Poratl.Models.Login
+
+@{
+    Layout = "_LayoutCustom";
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Login</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" asp-for="UserName" autocomplete="off" placeholder="Username" />
+                        <label asp-for="UserName">User name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" asp-for="Password" autocomplete="off" placeholder="Password" />
+                        <label asp-for="Password">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Role" asp-items="ViewBag.RolesData" class="form-select">
+                            <option value="">Please Select Role</option>
+                        </select>
+                        <label asp-for="Role">Role</label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,152 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SSVV Consultation Portal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SSVH_Consultation_Poratl.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/images/Logo.png" alt="logo" class="img img-fluid img-responsive" />
+                </a> *@
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between row">
+                    <div class="col-lg-3 col-sm-4">
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1 || HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                            }
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="Index">Classes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Stationary" asp-action="Index">Uniform</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Transport" asp-action="Index">Transport</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-sm-4">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/images/Logo.png" alt="logo" class="img img-fluid img-responsive" style="width:100%;" />
+                        </a>
+                    </div>
+                    <!-- Profile Section -->
+                    <div class="col-lg-3 col-sm-4">
+                        <div class="d-flex align-items-center" style="flex-direction: row-reverse; float: left">
+                            <div class="profile-avatar rounded-circle text-center d-flex align-items-center justify-content-center">
+                                <p style="margin-bottom: 0;">
+                                    @HttpContextAccessor.HttpContext.Session.GetString("FullName").Substring(0, 1)@HttpContextAccessor.HttpContext.Session.GetString("FullName").Split(' ').Last().Substring(0, 1)
+                                </p>
+                            </div>
+
+                            <div style="text-align:center;" class="mar-50">
+                                <span class="me-4">Welcome, @(HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "Guest")</span>
+                                <br />
+                                <span class="me-4 greeting"></span>
+                            </div>
+
+                            <div class="mar-40">
+                                <a class="btn btn-link logout-custom" asp-area="" asp-controller="Login" asp-action="Logout" title="Logout">
+                                    <i class="fa fa-power-off fa-2x"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="pt-2">
+        <footer class="border-top footer text-muted footerSmall">
+            <div class="container">
+                <p class="text-center m-0">
+                    SRI SARASWATHI VIDYA VIHAR 8-4-19 ASHOK NAGAR GAJUWAKA CONTACT : <b><call>90596 29689</call></b>; <b>73375 53175</b>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.min.js"></script>
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script type="text/javascript">
+        document.querySelectorAll('select').forEach((select) => {
+            select.addEventListener('change', function () {
+                if (this.value) {
+                    this.classList.add('has-value');
+                } else {
+                    this.classList.remove('has-value');
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $(".navbar-nav .nav-link").on("click", function () {
+                $(".navbar-nav .nav-link").removeClass("active");
+                $(this).addClass("active");
+            });
+            var currentPath = window.location.pathname;
+            var currentController = currentPath.split('/')[1];
+            $(".navbar-nav .nav-link").each(function () {
+                if ($(this).attr("href") === "/" + currentController) {
+                    $(this).addClass("active");
+                }
+            });
+
+            // Function to update the greeting
+            function updateGreeting() {
+                var currentHour = new Date().getHours();
+                // Determine the greeting based on the hour
+                var greeting;
+                if (currentHour >= 0 && currentHour < 12) {
+                    greeting = "Good Morning";
+                } else if (currentHour >= 12 && currentHour < 17) {
+                    greeting = "Good Afternoon";
+                } else {
+                    greeting = "Good Evening";
+                }
+                // Update the greeting on the page
+                $(".greeting").text(greeting);
+            }
+
+            // Initial greeting update
+            updateGreeting();
+
+            // Set an interval to update the greeting every minute (or as needed)
+            setInterval(updateGreeting, 60000); // 60000ms = 1 minute
+        });
+    </script>
+</body>
+</html>

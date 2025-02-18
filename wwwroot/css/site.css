@@ -1,0 +1,340 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.navbar-expand-sm .navbar-nav .nav-link {
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html, body {
+    background: #e0c2c2;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.custom-table {
+    box-shadow: 0px 0px 5px #000;
+    padding: 25px;
+    border-radius: 25px;
+    background: #fff;
+}
+
+.custom-labels {
+    position: relative;
+}
+
+    .custom-labels label {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        background: #fff;
+        padding: 0px;
+        transition: 0.2s;
+        pointer-events: none;
+    }
+
+    .custom-labels input:focus + label,
+    .custom-labels input:not(:placeholder-shown) + label {
+        top: -5px;
+        font-size: 13px;
+        color: #333;
+    }
+
+    .custom-labels input, .custom-labels select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 25px;
+    }
+
+
+    .custom-labels select {
+        padding: 10px;
+        padding-left: 10px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: white;
+        appearance: none;
+        color: #fff;
+    }
+
+    .custom-labels select {
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDExIDYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTS4yODMgMkw1LjE3NCA1LjI5N2wuMDQ4LjA0OC4wNDctLjA0OUwxMC44NjkgMiIgZmlsbD0iI2NjYyIvPjwvc3ZnPg==');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 10px;
+    }
+
+        .custom-labels select.has-value {
+            color: #333;
+        }
+
+            .custom-labels select.has-value + label {
+                top: -6px;
+                font-size: 13px;
+                color: #333;
+            }
+
+    .custom-labels input:read-only + label {
+        background: #e9ecef;
+    }
+
+.discountInput label {
+    top: 34%;
+}
+
+.discountInput input:focus + label,
+.discountInput input:not(:placeholder-shown) + label {
+    top: -5px;
+}
+
+
+/* Sliding Panel Container */
+#quarterFeesContainer {
+    display: none;
+}
+
+.sliding-panel {
+    position: relative;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+    transition: transform 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+    /* Panel Active State */
+    .sliding-panel.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Panel Header */
+    .sliding-panel h3 {
+        margin-bottom: 15px;
+        color: #333;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+/* List Group */
+.list-group-item {
+    font-size: 1rem;
+    padding: 10px 15px;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+/* Profile Avatar Styling */
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.bg-white {
+    /*background: rgba(253,55,55,.75) !important;*/
+    background: linear-gradient(135deg, #f4623a, #6f42c1) !important;
+    border-bottom: none !important;
+}
+
+.box-shadow {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5) !important;
+    padding: 15px 0px;
+}
+
+.navbar-light .navbar-nav .nav-link, .navbar-brand, .navbar-light {
+    color: #fff !important;
+}
+
+.footer {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5) !important;
+    /*background: rgba(253,55,55,.75) !important;*/
+    background: linear-gradient(135deg, #6f42c1, #f4623a) !important;
+    color: #fff !important;
+}
+
+.nav-item .active {
+    background-color: #a55a0cd4;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #333;
+    transform: scale(1.15);
+    transition: 1s ease-in-out;
+}
+
+/* Hide the default checkbox */
+.toggle-switch-checkbox {
+    display: none;
+}
+
+/* The switch - the container */
+.toggle-switch-label {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    position: relative;
+    background-color: #df0e0e;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Inner background - ON/OFF */
+.toggle-switch-inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background-color: #df0e0e;
+    transition: background-color 0.3s ease;
+}
+
+/* The circle slider */
+.toggle-switch-switch {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    transition: transform 0.3s ease;
+}
+
+/* When the checkbox is checked */
+.toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-inner {
+    background-color: #28a745;
+}
+
+/* When the checkbox is checked, move the circle slider */
+.toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-switch {
+    transform: translateX(30px);
+}
+
+.logout-custom.btn-link, .btn-link.logout-custom:hover {
+    color: #fff !important;
+    margin-right: 15px;
+    border: none !important;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #receipt-section, #receipt-section * {
+        visibility: visible;
+    }
+
+    #receipt-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+
+.mar-50 {
+    margin: 0px 50px;
+}
+
+.mar-40 {
+    margin: 0px 40px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar-expand-sm .navbar-nav .nav-link {
+        padding-right: 8px !important;
+        padding-left: 8px !important;
+    }
+
+    .nav-item .active {
+        transform: scale(1);
+    }
+
+    .mar-50 {
+        margin: 0px;
+    }
+
+    .mar-40 {
+        margin: 0px;
+    }
+
+    .footerSmall {
+        white-space: break-spaces;
+        word-break: break-word;
+        line-height: 20px;
+        font-size: 13px;
+    }
+
+    .container, .container-md, .container-sm {
+        max-width: 760px;
+    }
+
+    html {
+        font-size: 12px;
+    }
+
+    .toggle-switch-switch {
+        display: block;
+        width: 12px;
+        height: 12px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        transition: transform 0.3s ease;
+    }
+
+    .toggle-switch-label {
+        display: inline-block;
+        width: 45px;
+        height: 20px;
+        position: relative;
+        background-color: #df0e0e;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-switch {
+        transform: translateX(24px);
+    }
+
+    #IsAcadamicFeesDiscountchangeMargin {
+        margin-right: 10px;
+    }
+}
+
