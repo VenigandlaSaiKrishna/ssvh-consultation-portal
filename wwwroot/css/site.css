@@ -273,7 +273,7 @@ body {
     margin: 0px 40px;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 1599px) {
     .navbar-expand-sm .navbar-nav .nav-link {
         padding-right: 8px !important;
         padding-left: 8px !important;
