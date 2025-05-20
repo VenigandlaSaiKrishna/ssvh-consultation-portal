@@ -1,29 +1,69 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using SSVH_Consultation_Poratl.Models;
 
 public class PDFPrinter
 {
+    private bool _firstPage = true;     
     public byte[] GenerateConsultationReport(Consultation consultation)
     {
         using (MemoryStream ms = new MemoryStream())
         {
-            Rectangle a9Size = new Rectangle(105, 147);
-            Document doc = new Document(a9Size, 2, 2, 8, 8);
+            Rectangle a9Size = new Rectangle(100f, 300f);
+            Document doc = new Document(a9Size, 5, 5, 10, 10);
             PdfWriter writer = PdfWriter.GetInstance(doc, ms);
-            writer.PageEvent = new PdfHeaderFooter();
+            //writer.PageEvent = new PdfHeaderFooter();
             doc.Open();
-            doc.Add(new Paragraph(" ", FontFactory.GetFont(FontFactory.HELVETICA, 6))
+
+            PdfPTable headerTable = new PdfPTable(1);
+            headerTable.WidthPercentage = 98f;
+            headerTable.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            if (_firstPage)
             {
-                SpacingAfter = 15
+                try
+                {
+                    string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "print_logo.png");
+                    Image logo = Image.GetInstance(imagePath);
+                    logo.ScaleToFit(92f, 60f);
+                    PdfPCell logoCell = new PdfPCell(logo);
+                    logoCell.Border = Rectangle.NO_BORDER;
+                    logoCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    headerTable.AddCell(logoCell);
+
+                }
+                catch { }
+                Font titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 8, BaseColor.RED);
+                PdfPCell titleCell = new PdfPCell(new Phrase("Consultation Details", titleFont));
+                titleCell.Border = Rectangle.NO_BORDER;
+                titleCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                headerTable.AddCell(titleCell);
+                doc.Add(headerTable);
+            }
+            _firstPage = false;
+            
+            doc.Add(new Paragraph(".", FontFactory.GetFont(FontFactory.HELVETICA, 6))
+            {
+                PaddingTop = 15f
             });
+
+            float[] columnWidths = new float[] { 1.3f, 1.7f };
 
             PdfPTable table = new PdfPTable(2)
             {
-                WidthPercentage = 95,
-                HorizontalAlignment = Element.ALIGN_CENTER
+                WidthPercentage = 98f,
+                HorizontalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 200f
             };
+            
+
+            table.SetWidths(columnWidths);
+
+            table.TotalWidth = doc.PageSize.Width - doc.LeftMargin - doc.RightMargin;
+            table.LockedWidth = true;
+
 
             decimal? toatalFees = 0M;
 
@@ -54,13 +94,14 @@ public class PDFPrinter
             AddRow(table, "Parent Name", consultation.ParentName);
             AddRow(table, "Mobile No", consultation.Mobile);
             AddRow(table, "Class", consultation.ClassName);
+            AddRow(table, "Term Fees", "4 * " + $"{Convert.ToDecimal(consultation.AcadamicFees/4):N0}/-");
             AddRow(table, "Academic Fees", $"{consultation.AcadamicFees}");
             AddRow(table, "Admission Fees", $"{consultation.AdmissionFees}");
-            //AddRow(table, "Books Fees", $"{consultation.BooksAmount}");
-            //AddRow(table, "Uniform Fees", $"{consultation.UniformAmount}");
+            AddRow(table, "Books Fees", $"{consultation.BooksAmount}");
+            AddRow(table, "Uniform Fees", $"{consultation.UniformAmount + consultation.BeltTieSocksAmount}");
             //AddRow(table, "Belt/Tie/Socks Fees", $"{consultation.BeltTieSocksAmount}");
             AddRow(table, "Transport Fees", $"{consultation.TransportAmount}");
-            AddRow(table, "Total Fees", $"{toatalFees}");
+            //AddRow(table, "Total Fees", $"{toatalFees}");
             doc.Add(table);
             if (writer.PageNumber == writer.PageNumber)
             {
@@ -76,6 +117,12 @@ public class PDFPrinter
                     SpacingBefore = 5
                 };
                 doc.Add(footerContact);
+                Paragraph footerContactLine = new Paragraph("*****************************************", FontFactory.GetFont(FontFactory.HELVETICA, 5))
+                {
+                    Alignment = Element.ALIGN_CENTER,
+                    SpacingBefore = 5
+                };
+                doc.Add(footerContactLine);
             }
             doc.Close();
             return ms.ToArray();
@@ -87,7 +134,7 @@ public class PDFPrinter
         Font font = FontFactory.GetFont(FontFactory.COURIER, 5);
         string formattedValue;
 
-        if (field.ToLowerInvariant().Contains("fees"))
+        if (field.ToLowerInvariant().Contains("fees") && !field.ToLowerInvariant().Contains("term fees"))
         {
             if (string.IsNullOrEmpty(value.ToString()))
                 formattedValue = "₹ 0/-";
@@ -102,14 +149,16 @@ public class PDFPrinter
         PdfPCell cell1 = new PdfPCell(new Phrase(field, font))
         {
             Border = Rectangle.BOX,
-            Padding = 2,
-            HorizontalAlignment = Element.ALIGN_RIGHT
+            Padding = 1,
+            HorizontalAlignment = Element.ALIGN_RIGHT,
+            NoWrap = false,
         };
         PdfPCell cell2 = new PdfPCell(new Phrase(formattedValue, font))
         {
             Border = Rectangle.BOX,
             Padding = 2,
-            HorizontalAlignment = Element.ALIGN_LEFT
+            HorizontalAlignment = Element.ALIGN_LEFT,
+            NoWrap = false
         };
         table.AddCell(cell1);
         table.AddCell(cell2);

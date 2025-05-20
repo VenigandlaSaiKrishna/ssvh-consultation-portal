@@ -9,6 +9,7 @@ namespace SSVH_Consultation_Poratl.Models
         public string? StudentName { get; set; }
         public string? ParentName { get; set; }
         public string? Mobile { get; set; }
+        public string? PreviousSchoolName { get; set; }
         public string? AcadamicYear { get; set; }
         public string? ClassName { get; set; }
         public decimal? TransportAmount { get; set; }

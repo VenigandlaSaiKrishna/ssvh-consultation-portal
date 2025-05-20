@@ -45,6 +45,22 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group custom-labels">
+                                <input asp-for="Status" class="form-control" value="Enquiry" autocomplete="off" placeholder="" />
+                                <label asp-for="Status" class="control-label">Status</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group custom-labels">
+                            <input asp-for="PreviousSchoolName" class="form-control" autocomplete="off" placeholder="" />
+                            <label asp-for="PreviousSchoolName" class="control-label">Transfered From</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group custom-labels">
                             <select asp-for="ClassId" asp-items="ViewBag.ClaaNames" class="form-control form-select">
                                 <option value="" selected>Please Select</option>
@@ -157,7 +173,7 @@
                             <label asp-for="TransportAmount" class="control-label" disabled>Transport Amount</label>
                         </div>
                     </div>
-                </div>
+                </div>              
                 <div class="row">
                     <div class="col-12">
                         <hr />
@@ -270,60 +286,60 @@
                 type: 'html',
                 header: 'Consultation Receipt',
                 style: `
-                                                                                @@page {
-                                                                                    size: A8;
-                                                                                    margin: 0;
-                                                                                }
-                                                                                body {
-                                                                                    font-family: Arial, sans-serif;
-                                                                                    font-size: 8px;
-                                                                                    margin: 0;
-                                                                                    padding: 0;
-                                                                                    display: flex;
-                                                                                    justify-content: center;
-                                                                                    align-items: center;
-                                                                                    height: 100vh;
-                                                                                }
-                                                                                h1 {
-                                                                                    text-align: center;
-                                                                                    margin-bottom: 10px;
-                                                                                    font-size: 16px;
-                                                                                }
-                                                                                table {
-                                                                                    width: 90%;
-                                                                                    border: 1px solid black;
-                                                                                    border-collapse: collapse;
-                                                                                    margin: 0 auto;
-                                                                                }
-                                                                                th, td {
-                                                                                    padding: 4px;
-                                                                                    text-align: left;
-                                                                                    border: 1px solid black;
-                                                                                    font-size: 8px;
-                                                                                }
-                                                                                @@media print {
-                                                                                    body {
-                                                                                        display: block;
-                                                                                        padding: 0;
-                                                                                        height: auto;
-                                                                                    }
-                                                                                    #receipt-section {
-                                                                                        display: block !important;
-                                                                                        margin: 0;
-                                                                                        text-align: center;
-                                                                                    }
-                                                                                    table {
-                                                                                        width: 80%;
-                                                                                        margin: 0 auto;
-                                                                                        border: 1px solid black;
-                                                                                        border-collapse: collapse;
-                                                                                    }
-                                                                                    th, td {
-                                                                                        padding: 5px;
-                                                                                        font-size: 8px;
-                                                                                    }
-                                                                                }
-                                                                          `
+                                                                                        @@page {
+                                                                                            size: A8;
+                                                                                            margin: 0;
+                                                                                        }
+                                                                                        body {
+                                                                                            font-family: Arial, sans-serif;
+                                                                                            font-size: 8px;
+                                                                                            margin: 0;
+                                                                                            padding: 0;
+                                                                                            display: flex;
+                                                                                            justify-content: center;
+                                                                                            align-items: center;
+                                                                                            height: 100vh;
+                                                                                        }
+                                                                                        h1 {
+                                                                                            text-align: center;
+                                                                                            margin-bottom: 10px;
+                                                                                            font-size: 16px;
+                                                                                        }
+                                                                                        table {
+                                                                                            width: 90%;
+                                                                                            border: 1px solid black;
+                                                                                            border-collapse: collapse;
+                                                                                            margin: 0 auto;
+                                                                                        }
+                                                                                        th, td {
+                                                                                            padding: 4px;
+                                                                                            text-align: left;
+                                                                                            border: 1px solid black;
+                                                                                            font-size: 8px;
+                                                                                        }
+                                                                                        @@media print {
+                                                                                            body {
+                                                                                                display: block;
+                                                                                                padding: 0;
+                                                                                                height: auto;
+                                                                                            }
+                                                                                            #receipt-section {
+                                                                                                display: block !important;
+                                                                                                margin: 0;
+                                                                                                text-align: center;
+                                                                                            }
+                                                                                            table {
+                                                                                                width: 80%;
+                                                                                                margin: 0 auto;
+                                                                                                border: 1px solid black;
+                                                                                                border-collapse: collapse;
+                                                                                            }
+                                                                                            th, td {
+                                                                                                padding: 5px;
+                                                                                                font-size: 8px;
+                                                                                            }
+                                                                                        }
+                                                                                  `
             });
 
             document.getElementById("receipt-section").style.display = "none";

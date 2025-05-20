@@ -67,7 +67,7 @@ namespace SSVH_Consultation_Poratl.Controllers
             if (ModelState.IsValid)
             {
                 Consultation consultation = new Consultation();
-                consultation.Status = "Enquiry";
+                consultation.Status = model.Status;
                 consultation.StudentName = model.StudentName;
                 consultation.ParentName = model.ParentName;
                 consultation.AcadamicFees   = model.AcadamicFees;
@@ -85,6 +85,7 @@ namespace SSVH_Consultation_Poratl.Controllers
                 consultation.BeltTieSocksAmount = model.BeltTieSocksAmount;
                 consultation.TransportId = model.TransportId;
                 consultation.UniformData =  model.UniformData;
+                consultation.PreviousSchoolName = model.PreviousSchoolName;
 
                 _context.Consultation.Add(consultation);
                 await _context.SaveChangesAsync();
@@ -154,6 +155,7 @@ namespace SSVH_Consultation_Poratl.Controllers
             consultationVMEntity.UniformData =  consultationEntity.UniformData;
             consultationVMEntity.CreatedBy =  consultationEntity.CreatedBy;
             consultationVMEntity.CreatedOn =  consultationEntity.CreatedOn;
+            consultationVMEntity.PreviousSchoolName = consultationEntity.PreviousSchoolName;
 
             var clssData = await _context.ClassNames.ToListAsync();
             var classData = await _context.Classes.ToListAsync();
